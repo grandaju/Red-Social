@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head"/>
+<body>
+	<nav th:replace="fragments/nav"/>
+		<div class="container" style="text-align: center">
+		<h2 th:text="#{welcome.message}"></h2>
+			<p>Red Social vital</p>
+			<button type="button" th:id="${'usersButton'}" class="btn btn-info" sec:authorize="isAuthenticated()">Usuarios</button>
+		<script>
+			$("#usersButton").click(function() {
+				$.get("/user/list").load();
+			});
+		</script>
+		</div>
+<footer th:replace="fragments/footer"/>
+	</body>
+	
+</html>
