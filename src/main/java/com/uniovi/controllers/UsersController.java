@@ -82,7 +82,7 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "login";
 		}
-		return "redirect:/user/list";
+		return "redirect:user/list";
 	}
 	
 	
