@@ -57,6 +57,9 @@ public class UsersService {
 		users = usersRepository.searchByEmailOrName(pageable,searchText);
 		return users;
 	}
+//	public void agregate(User invitado, User invitador) {
+//		
+//	}
 
 
 	

@@ -25,21 +25,33 @@
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
-					
+
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">aaa@bbb.com</td>
-						<td th:text="${user.name}">Nombre </td>
-						
+						<td th:text="${user.name}">Nombre</td>
+						<td><div class = "invitations">
+
+								<button type="button" th:id="${'invitationButton' + user.id}"
+									class="btn btn-info">AgregarAmigo</button>
+								<script th:inline="javascript">
+								  /*<![CDATA[*/
+								  $( "#invitationButton[[${user.id}]]" ).click(function() {
+									  $.get( "/invitation/agergate/[[${user.id}]]");
+								  });
+								  /*]]>*/
+								</script>
+						</div></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-			<footer th:replace="fragments/pagination" />
-		
+		<footer th:replace="fragments/pagination" />
+
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
 </html>
+

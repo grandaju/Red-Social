@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -20,6 +21,11 @@ public class User {
 	private String password;
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
+	@OneToMany(mappedBy = "invitado", cascade = CascadeType.ALL)
+	private Set<Invitation> invitaciones = new HashSet<Invitation>();
+	
+	@OneToOne(mappedBy="invitador",  cascade = CascadeType.ALL)
+	private Invitation invitacion = new Invitation();
 
 	public User(String email, String name, String lastName) {
 		super();

@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -76,14 +77,6 @@ public class UsersController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Validated User user, BindingResult result, Model model) {
-		loginValidator.validate(user, result);
-		if (result.hasErrors()) {
-			return "login";
-		}
-		return "redirect:user/list";
-	}
 	
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
@@ -157,5 +150,22 @@ public class UsersController {
 		usersService.addUser(original);
 		return "redirect:/user/details/" + id;
 	}
+	
+	
+//	/**
+//	 * Respuesta para agregar a un amigo obtenemos nuestra propia info a traves del contexto
+//	 * @param model
+//	 * @param id de quien queremos agregar
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/user/agregate/{id}")
+//	public String agregate(Model model, @PathVariable Long id) {
+//		User invitado = usersService.getUser(id);
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String email = auth.getName();
+//		User invitador = usersService.getUserByEmail(email);
+//		usersService.agregate(invitado, invitador);
+//		return "redirect:/user/list/";
+//	}
 
 }

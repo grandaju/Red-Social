@@ -12,12 +12,19 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" " sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
-				<li id="users-menu" class="dropdown"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
-						th:text="#{nav.users}"></span><span class="caret"></span>
+				<li id="users-menu" class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <span th:text="#{nav.users}"></span><span
+						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/list">Ver Usuarios</a></li>
+					</ul></li>
+				<li id="invitations-menu" class="dropdown"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
+						th:text="#{nav.invitations}"></span><span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/invitation/list">Ver Invitaciones</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{viewinvis.title}"></h2>
+	
+
+		<p th:text="#{viewinvis.message}"></p>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Invitado</th>
+						<th>Invitador</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="invitation : ${invitationsList}">
+						<td th:text="${invitation.invitado.email}">aaa@bbb.com</td>
+						<td th:text="${invitation.invitador.email}">bbb@aaa.com</td>
+					
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>
