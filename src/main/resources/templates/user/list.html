@@ -32,7 +32,7 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">aaa@bbb.com</td>
 						<td th:text="${user.name}">Nombre</td>
-						<td><div class = "invitations">
+						<td>
 
 								<button type="button" th:id="${'invitationButton' + user.id}"
 									class="btn btn-info">AgregarAmigo</button>
@@ -40,10 +40,12 @@
 								  /*<![CDATA[*/
 								  $( "#invitationButton[[${user.id}]]" ).click(function() {
 									  $.get( "/invitation/agergate/[[${user.id}]]");
+									  $("#invitationButton[[${user.id}]]").hide();
+									 // alert("Invitacion de amistad enviada");
 								  });
 								  /*]]>*/
 								</script>
-						</div></td>
+					</td>
 					</tr>
 				</tbody>
 			</table>
