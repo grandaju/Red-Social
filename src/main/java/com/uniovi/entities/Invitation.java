@@ -10,7 +10,7 @@ public class Invitation {
 	@ManyToOne
 	@JoinColumn(name = "invitado_id")
 	private User invitado;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "invitador_id")
 	private User invitador;
 	private boolean aceptada;
