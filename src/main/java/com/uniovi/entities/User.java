@@ -22,10 +22,11 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 	@OneToMany(mappedBy = "invitado", cascade = CascadeType.ALL)
-	private Set<Invitation> invitaciones = new HashSet<Invitation>();
+	private Set<Invitation> invitaciones;
 	
-	@OneToOne(mappedBy="invitador",  cascade = CascadeType.ALL)
-	private Invitation invitacion = new Invitation();
+	@OneToMany(mappedBy="invitador",  cascade = CascadeType.ALL)
+	private Set<Invitation> invitacionesEnviadas;
+
 
 	public User(String email, String name, String lastName) {
 		super();
