@@ -33,9 +33,8 @@
 						<td th:text="${user.email}">aaa@bbb.com</td>
 						<td th:text="${user.name}">Nombre</td>
 						<td><div class = "invitations">
-
 								<button type="button" th:id="${'invitationButton' + user.id}"
-									class="btn btn-info">AgregarAmigo</button>
+									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
 								  $( "#invitationButton[[${user.id}]]" ).click(function() {
