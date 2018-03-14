@@ -26,8 +26,15 @@ public class User {
 	
 	@OneToMany(mappedBy="invitador",  cascade = CascadeType.ALL)
 	private Set<Invitation> invitacionesEnviadas;
+	
+	
+	@OneToMany(mappedBy="userA", cascade = CascadeType.ALL)
+	private Set<Friend> amigos;
 
+	@OneToMany(mappedBy="userB", cascade = CascadeType.ALL)
+	private Set<Friend> amigosB;
 
+	
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;

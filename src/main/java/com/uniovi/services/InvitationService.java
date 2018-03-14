@@ -37,5 +37,14 @@ public class InvitationService {
 		Page<Invitation> invis = invitationRepository.searchByInvitado(pageable, id);
 		return invis;
 	}
+	
+	public Invitation getInvitation(Long id) {
+		return invitationRepository.findOne(id);
+	}
+
+	public void remove(Long id) {
+		invitationRepository.delete(id);
+		
+	}
 
 }

@@ -32,12 +32,9 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">aaa@bbb.com</td>
 						<td th:text="${user.name}">Nombre</td>
-<<<<<<< HEAD
-						<td><div class = "invitations">
-=======
+
 						<td>
 
->>>>>>> master
 								<button type="button" th:id="${'invitationButton' + user.id}"
 									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">

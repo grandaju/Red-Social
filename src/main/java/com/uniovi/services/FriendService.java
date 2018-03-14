@@ -23,13 +23,14 @@ public class FriendService {
 		friendRepository.save(amistad);
 	}
 	
+
 	/**
-	 * Metodo que nos devuelve la pagina con las amistades
+	 * Obtenemos los amigos que se encuentran relacionados con el id del usuario
 	 * @param pageable
-	 * @param id del usuario conectado
+	 * @param id
 	 * @return
 	 */
-	public Page<User> getInvitations(Pageable pageable, long id) {
+	public Page<User> getFriends(Pageable pageable, long id) {
 		Page<User> invis = friendRepository.searchByAmistad(pageable, id);
 		return invis;
 	}

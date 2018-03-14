@@ -25,7 +25,19 @@
 					<tr th:each="invitation : ${invitationsList}">
 						<td th:text="${invitation.invitado.email}">aaa@bbb.com</td>
 						<td th:text="${invitation.invitador.email}">bbb@aaa.com</td>
-					
+						<td>
+
+								<button type="button" th:id="${'friendButton' + invitation.id}"
+									class="btn btn-info">Agregar Amigo</button>
+								<script th:inline="javascript">
+								  /*<![CDATA[*/
+								  $( "#friendButton[[${invitation.id}]]" ).click(function() {
+									  $.get( "/friend/agergate/[[${invitation.id}]]");
+									
+								  });
+								  /*]]>*/
+								</script>
+					</td>
 					</tr>
 				</tbody>
 			</table>

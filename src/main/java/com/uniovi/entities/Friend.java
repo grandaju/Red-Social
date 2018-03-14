@@ -8,9 +8,10 @@ public class Friend {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+	@ManyToOne
 	@JoinColumn(name = "userA")
 	private User userA;
+	@ManyToOne
 	@JoinColumn(name = "userB")
 	private User userB;
 	
