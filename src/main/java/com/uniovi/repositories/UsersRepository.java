@@ -17,4 +17,7 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 
 	User findByEmail(String email);
 
+	@Query("SELECT u FROM User u WHERE u.id <> ?1")
+	Page<User> searchAllExceptYou(Pageable pageable,Long id);
+
 }

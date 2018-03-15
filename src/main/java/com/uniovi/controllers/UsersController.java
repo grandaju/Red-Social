@@ -90,12 +90,15 @@ public class UsersController {
 	@RequestMapping(value= {"/user/list"},  method = RequestMethod.GET)
 	public String getListado(Model model,Pageable pageable, @RequestParam(value = "", required = false) String searchText) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		
 		if (searchText != null && !searchText.isEmpty()) {
 			users = usersService.searchUserByNameOrEmail(pageable,searchText);//TODO
 		} 
 		else {
-			users = usersService.getUsers(pageable);
+			users = usersService.getUsersExceptMe(pageable, activeUser.getId());
 			
 		}
 		model.addAttribute("page", users);

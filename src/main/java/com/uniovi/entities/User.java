@@ -34,6 +34,7 @@ public class User {
 	@OneToMany(mappedBy="userB", cascade = CascadeType.ALL)
 	private Set<Friend> amigosB;
 
+	//Eliminar la entidad Friend y añadir el @ManyToMany, para generar una tabla automaticamente.
 	
 	public User(String email, String name, String lastName) {
 		super();
