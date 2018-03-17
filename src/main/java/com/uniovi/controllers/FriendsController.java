@@ -35,15 +35,18 @@ public class FriendsController {
 	
 	/**
 	 * Metodo que permite llamar a las acciones relativas para agregar a un amigo
-	 * en eset caso crea una entrada que relaciona dos usuarios
+	 * en eset caso crea una entrada que relaciona dos usuarios se obtiene la invitacion segun los id de los usuarios
 	 * @param 
-	 * @param id de la invitacion
+	 * @param id del invitador
 	 * @return
 	 */
 	@RequestMapping(value = "/friend/agergate/{id}")
-	public String agregate(Model model, @PathVariable Long id) {
-		//Obtenemos la invitacion y los integrantes
-		Invitation invit = invitationService.getInvitation(id);
+	public String agregate(Model model, @PathVariable long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = usersService.getUserByEmail(email);
+		
+		Invitation invit = invitationService.getInvitation(id, user.getId());
 		User userA = invit.getInvitado();
 		User userB = invit.getInvitador();
 		//Creamos una amistad

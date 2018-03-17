@@ -38,8 +38,8 @@ public class InvitationService {
 		return invis;
 	}
 	
-	public Invitation getInvitation(Long id) {
-		return invitationRepository.findOne(id);
+	public Invitation getInvitation(long id, long userId) {
+		return invitationRepository.serarchByIds(id, userId);
 	}
 
 	public void remove(Long id) {

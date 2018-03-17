@@ -27,12 +27,12 @@
 						<td th:text="${invitation.invitador.email}">bbb@aaa.com</td>
 						<td>
 
-								<button type="button" th:id="${'friendButton' + invitation.id}"
+								<button type="button" th:id="${'friendButton' + invitation.invitador.id}"
 									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
-								  $( "#friendButton[[${invitation.id}]]" ).click(function() {
-									  $.get( "/friend/agergate/[[${invitation.id}]]");
+								  $( "#friendButton[[${invitation.invitador.id}]]" ).click(function() {
+									  $.get( "/friend/agergate/[[${invitation.invitador.id}]]");
 									
 								  });
 								  /*]]>*/

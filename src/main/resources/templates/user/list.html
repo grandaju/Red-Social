@@ -33,8 +33,7 @@
 						<td th:text="${user.email}">aaa@bbb.com</td>
 						<td th:text="${user.name}">Nombre</td>
 
-						<td>
-
+						<td th:id="${'tdb' + user.id}">
 								<button type="button" th:id="${'invitationButton' + user.id}"
 									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">
@@ -42,6 +41,7 @@
 								  $( "#invitationButton[[${user.id}]]" ).click(function() {
 									  $.get( "/invitation/agergate/[[${user.id}]]");
 									  $("#invitationButton[[${user.id}]]").hide();
+									  $("#tdb[[${user.id}]]").append("<p> Usuario ya invitado / User already invited </p>");
 									 // alert("Invitacion de amistad enviada");
 								  });
 								  /*]]>*/

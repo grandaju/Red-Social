@@ -3,6 +3,7 @@ package com.uniovi.tests;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +25,8 @@ import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_SearchUserView;
 import com.uniovi.tests.pageobjects.PO_View;
 import com.uniovi.tests.util.SeleniumUtils;
+
+import junit.framework.Assert;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RedSocialTests {
@@ -72,7 +75,7 @@ public class RedSocialTests {
 
 	// 1.1 [RegVal] Registro de Usuario con datos válidos.
 	@Test
-	public void PR01() {
+	public void PR1_1() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -84,7 +87,7 @@ public class RedSocialTests {
 	// 1.2 [RegInval] Registro de Usuario con datos inválidos (repetición de
 	// contraseña invalida). 
 	@Test
-	public void PR02() {
+	public void PR1_2() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario pero la contraseña no coincide
@@ -95,7 +98,7 @@ public class RedSocialTests {
 
 	// 2.1 [InVal] Inicio de sesión con datos válidos.
 	@Test
-	public void PR03() {
+	public void PR2_1() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -109,7 +112,7 @@ public class RedSocialTests {
 	// 2.2 [InInVal] Inicio de sesión con datos inválidos (usuario no existente en
 	// la aplicación).
 	@Test
-	public void PR04() {
+	public void PR2_2() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -120,7 +123,7 @@ public class RedSocialTests {
 
 	// 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesión.
 	@Test
-	public void PR05() {
+	public void PR3_1() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -142,7 +145,7 @@ public class RedSocialTests {
 	// Debe producirse un acceso no permitido a vistas privadas.
 
 	@Test
-	public void PR06() {
+	public void PR3_2() {
 		// Navegamos a la url /user/list
 		driver.navigate().to("http://localhost:8090/user/list");
 		// Ya que se trata de un usuario no identificado se redirige al login
@@ -153,7 +156,7 @@ public class RedSocialTests {
 	// 4.1 [BusUsrVal] Realizar una búsqueda valida en el listado de usuarios desde
 	// un usuario en sesión.
 	@Test
-	public void PR07() {
+	public void PR4_1() {
 		// Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario.
@@ -171,17 +174,17 @@ public class RedSocialTests {
 		SeleniumUtils.esperarSegundos(driver, 1);
 
 		// Comprobamos si prueba existe y volvemos a la primera página
-		PO_View.checkElement(driver, "free", "//td[contains(text(), 'prueba@gmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'ed@gmail.com')]");
 		// Volvemos a la primera página
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
 		elementos.get(0).click();
 		SeleniumUtils.esperarSegundos(driver, 1);
 
 		// Buscamos un usuario
-		PO_SearchUserView.fillSearch(driver, "prueba@gmail.com");
+		PO_SearchUserView.fillSearch(driver, "ed@gmail.com");
 		SeleniumUtils.esperarSegundos(driver, 1);
 		// Comprobamos que entramos en la sección del listado de usuarios
-		PO_View.checkElement(driver, "free", "//td[contains(text(), 'prueba@gmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'ed@gmail.com')]");
 
 	}
 
@@ -189,7 +192,7 @@ public class RedSocialTests {
 	// un usuario no identificado. Debe producirse un acceso no permitido a vistas
 	// privadas.
 	@Test
-	public void PR08() {
+	public void PR4_2() {
 		// Navegamos a la url de la busqueda /user/list?searchText=prueba@gmail.com
 		driver.navigate().to("http://localhost:8090/user/list?searchText=prueba@gmail.com");
 		// Ya que se trata de un usuario no identificado se redirige al login
@@ -198,7 +201,7 @@ public class RedSocialTests {
 	}
 	//5.1 [InvVal] Enviar una invitación de amistad a un usuario de forma valida.
 	@Test
-	public void PR09() {
+	public void PR5_1() {
 		// Vamos al formulario de login
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		SeleniumUtils.esperarSegundos(driver, 1);
@@ -234,5 +237,170 @@ public class RedSocialTests {
 		
 
 	}
+	//5.2 [InvInVal] Enviar una invitación de amistad a un usuario al que ya le habíamos invitado la invitación previamente.
+	//	No debería dejarnos enviar la invitación, se podría ocultar el botón de enviar invitación o notificar que ya había sido enviada previamente.
+	//PENDIENTE
+	@Test
+	public void PR5_2() {
+		// Vamos al formulario de login
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "prueba@gmail.com", "123456");
+		// Comprobamos que entramos en la sección del listado de usuarios
+		PO_View.checkElement(driver, "text", "Usuarios que se encuentran en el sistema");
+		// Vamos a la lista de usuarios (a pesar de estar alli)
+		List<WebElement> elems = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elems.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		//Invitamos a pedro@gmail.com a ser amigos de prueba@gmail.com
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'pedro@gmail.com')]/following-sibling::*/button[contains(@id, 'invitationButton1')]");
+		elems.get(0).click();
+		
+	    PO_View.checkElement(driver, "free","//td[contains(text(), 'pedro@gmail.com')]/following-sibling::*/p[contains(text(), 'Usuario ya invitado / User already invited')]");
+
 	
+		
+
+	}
+	//6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la comprobación con una lista que al menos tenga una invitación recibida.
+	@Test
+	public void PR6_1() {
+		// Vamos al formulario de login
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "prueba@gmail.com", "123456");
+		// Comprobamos que entramos en la sección del listado de usuarios
+		PO_View.checkElement(driver, "text", "Usuarios que se encuentran en el sistema");
+		// Vamos a la lista de usuarios (a pesar de estar alli)
+		List<WebElement> elems = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elems.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		//Invitamos a pedro@gmail.com a ser amigos de prueba@gmail.com
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'lucas@gmail.com')]/following-sibling::*/button[contains(@id, 'invitationButton2')]");
+		elems.get(0).click();
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Logout
+		driver.navigate().to("http://localhost:8090/login?logout");
+
+
+		PO_LoginView.fillForm(driver, "lucas@gmail.com", "123456");
+		
+		
+		//Vamos a comprobar si la invitacion se ha enviado vamos a la url
+		driver.navigate().to("http://localhost:8090/invitation/list");
+
+		//Comprobamos que estamos viendo las invitaciones 
+		PO_View.checkElement(driver, "text", "Lista de invitaciones");
+		//Comprobamos que la invitacion se ha enviado vemos que prueba quiere ser amigo de pedro@gmail.com
+		PO_View.checkElement(driver, "free","//td[contains(text(), 'prueba@gmail.com')]");
+		
+
+	}
+	//7.1 [AcepInvVal] Aceptar una invitación recibida.
+	@Test
+	public void PR7_1() {
+		// Vamos al formulario de login
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "prueba@gmail.com", "123456");
+		// Comprobamos que entramos en la sección del listado de usuarios
+		PO_View.checkElement(driver, "text", "Usuarios que se encuentran en el sistema");
+		// Vamos a la lista de usuarios (a pesar de estar alli)
+		List<WebElement> elems = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elems.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		//Invitamos a pedro@gmail.com a ser amigos de prueba@gmail.com
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'maria@gmail.com')]/following-sibling::*/button[contains(@id, 'invitationButton3')]");
+		elems.get(0).click();
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Logout
+		driver.navigate().to("http://localhost:8090/login?logout");
+
+
+		PO_LoginView.fillForm(driver, "maria@gmail.com", "123456");
+		
+		
+		//Vamos a comprobar si la invitacion se ha enviado vamos a la url
+		driver.navigate().to("http://localhost:8090/invitation/list");
+
+		//Comprobamos que estamos viendo las invitaciones 
+		PO_View.checkElement(driver, "text", "Lista de invitaciones");
+		//Comprobamos que la invitacion se ha enviado vemos que prueba quiere ser amigo de maria@gmail.com y la aceptamos
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'prueba@gmail.com')]/following-sibling::*/button[contains(@id, 'friendButton7')]");
+		elems.get(0).click();
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Vamos a la url de que muestra la lista de amigos
+		driver.navigate().to("http://localhost:8090/friends/list");
+		
+		//Estamos viendo los amigos
+		PO_View.checkElement(driver, "text", "Amigos");
+		//En la tabla de los amigos se enctentra pedro
+		PO_View.checkElement(driver, "free","//td[contains(text(), 'prueba@gmail.com')]");
+
+		
+
+	}
+	/**
+	 * 	8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobación con una lista que al menos tenga un amigo.
+	 */
+	@Test
+	public void PR8_1() {
+		// Vamos al formulario de login
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		// Rellenamos el formulario.
+		PO_LoginView.fillForm(driver, "prueba@gmail.com", "123456");
+		// Comprobamos que entramos en la sección del listado de usuarios
+		PO_View.checkElement(driver, "text", "Usuarios que se encuentran en el sistema");
+		// Vamos a la lista de usuarios (a pesar de estar alli)
+		List<WebElement> elems = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elems.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		//Invitamos a pelayoy@gmail.com a ser amigos de prueba@gmail.com
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'pelayo@gmail.com')]/following-sibling::*/button[contains(@id, 'invitationButton5')]");
+		elems.get(0).click();
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Logout
+		driver.navigate().to("http://localhost:8090/login?logout");
+
+
+		PO_LoginView.fillForm(driver, "pelayo@gmail.com", "123456");
+		
+		
+		//Vamos a comprobar si la invitacion se ha enviado vamos a la url
+		driver.navigate().to("http://localhost:8090/invitation/list");
+
+		//Comprobamos que estamos viendo las invitaciones 
+		PO_View.checkElement(driver, "text", "Lista de invitaciones");
+		//Comprobamos que la invitacion se ha enviado vemos que prueba quiere ser amigo de pelayo@gmail.com y la aceptamos
+		elems = PO_View.checkElement(driver, "free","//td[contains(text(), 'prueba@gmail.com')]/following-sibling::*/button[contains(@id, 'friendButton7')]");
+		elems.get(0).click();
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		//Vamos a la url de que muestra la lista de amigos
+		driver.navigate().to("http://localhost:8090/friends/list");
+		
+		//Estamos viendo los amigos
+		PO_View.checkElement(driver, "text", "Amigos");
+		//En la tabla de los amigos se enctentra pedro
+		PO_View.checkElement(driver, "free","//td[contains(text(), 'prueba@gmail.com')]");
+
+		
+
+	}
 }
