@@ -6,13 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.uniovi.entities.Friend;
-import com.uniovi.entities.User;
+import com.uniovi.entities.Publication;
 @Repository
-public interface FriendRepository extends CrudRepository<Friend, Long> {
-	
-	@Query("Select f.userB from Friend f where f.userA.id = ?1")
-	Page<User> searchByAmistad(Pageable pageable, long id);
+public interface PublicationRepository  extends CrudRepository<Publication, Long>{
+	@Query("SELECT p FROM Publication p WHERE p.user.id = ?1 ORDER BY p.date DESC")
+	Page<Publication> searchMyPublications(Pageable pageable, long id);
 
-	Page<User> findAll(Pageable pageable);
 }

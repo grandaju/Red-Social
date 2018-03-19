@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{viewpublications.title}"></h2>
+	
+
+		<p th:text="#{viewpublications.message}"></p>
+		<div class="table-responsive">
+			<ul class="pubsList">
+
+					<li th:each="publication : ${publicationsList}">
+						<ul class ="pubsList Data">
+								<span>Usuario:</span><p th:text="${publication.user.email}"></p>
+								<span>Fecha:</span><p th:text="${publication.date}"></p>
+							</ul>
+						<span>Titulo:</span><p th:text="${publication.title}"></p>
+						<span>Text:</span><p th:text="${publication.text}"></p>
+					</li>
+			</ul>
+		</div>
+
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

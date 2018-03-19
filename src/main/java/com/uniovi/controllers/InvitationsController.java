@@ -2,6 +2,8 @@ package com.uniovi.controllers;
 
 import java.util.LinkedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.uniovi.RedSocialApplication;
 import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.services.InvitationService;
@@ -20,7 +23,8 @@ import com.uniovi.services.UsersService;
 
 @Controller
 public class InvitationsController {
-	
+	static Logger log = LoggerFactory.getLogger(RedSocialApplication.class);
+
 	@Autowired
 	private UsersService usersService;
 	
@@ -39,6 +43,7 @@ public class InvitationsController {
 		String email = auth.getName();
 		User invitador = usersService.getUserByEmail(email);
 		invitationService.agregate(invitado, invitador);
+		log.info("Enviada la invitacion a:"+invitado.getFullName() +" de: "+invitador.getFullName());
 		return "redirect:/user/list/";
 	}
 	/**
@@ -63,6 +68,7 @@ public class InvitationsController {
 		model.addAttribute("page", invis);
 		model.addAttribute("invitationsList", invis.getContent());
 
+		log.info("Listando invitaciones de:"+user.getFullName());
 		return "/invitation/list";
 	}
 }

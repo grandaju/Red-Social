@@ -1,10 +1,10 @@
 package com.uniovi.controllers;
 
-import java.security.Principal;
 import java.util.LinkedList;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,18 +14,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import com.uniovi.entities.*;
-import com.uniovi.repositories.UsersRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.uniovi.RedSocialApplication;
+import com.uniovi.entities.User;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.AddUserValidator;
-import com.uniovi.validators.LoginValidator;
 import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UsersController {
+	static Logger log = LoggerFactory.getLogger(RedSocialApplication.class);
 
 	@Autowired
 	private UsersService usersService;
@@ -36,8 +41,6 @@ public class UsersController {
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
 	
-	@Autowired
-	private LoginValidator loginValidator;
 
 	@Autowired
 	private RolesService rolesService;
@@ -61,12 +64,14 @@ public class UsersController {
 	public String setUser(@Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
 		if (result.hasErrors()) {
+			log.error("Error en el formulario de registro");
 			return "signup";
 		}
 		user.setRole(rolesService.getRoles()[0]);
 
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		log.info("Accediendo al sistema via registro");
 		return "redirect:home";
 
 	}
@@ -81,9 +86,6 @@ public class UsersController {
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		User activeUser = usersService.getUserByEmail(email);
 		return "home";
 	}
 
@@ -103,6 +105,8 @@ public class UsersController {
 		}
 		model.addAttribute("page", users);
 		model.addAttribute("usersList", users.getContent());
+		log.info("Viendo la lista de usuarios para:" +activeUser.getFullName());
+
 
 		return "user/list";
 	}
@@ -112,6 +116,7 @@ public class UsersController {
 		model.addAttribute("rolesList", rolesService.getRoles());
 
 		model.addAttribute("user", new User());
+		
 		return "user/add";
 	}
 

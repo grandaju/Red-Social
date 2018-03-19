@@ -2,6 +2,8 @@ package com.uniovi.controllers;
 
 import java.util.LinkedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.uniovi.entities.Friend;
+import com.uniovi.RedSocialApplication;
 import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendService;
@@ -23,7 +25,8 @@ import com.uniovi.services.UsersService;
 @Controller
 public class FriendsController {
 	
-	
+	static Logger log = LoggerFactory.getLogger(FriendsController.class);
+
 	@Autowired
 	private UsersService usersService;
 	
@@ -54,6 +57,7 @@ public class FriendsController {
 		friendService.agregate(userB, userA);
 		//Eliminamos la invitacion
 		invitationService.remove(id);
+		log.info("Se ha añadido la amistad" + userA.getFullName() +" y "+ userB.getFullName());
 		return "redirect:/user/list/";
 	}
 	/**
@@ -76,6 +80,8 @@ public class FriendsController {
 	
 		model.addAttribute("page", invis);
 		model.addAttribute("friendList", invis.getContent());
+		
+		log.info("Listando los amigos de:"+ user.getFullName());
 
 		return "/friends/list";
 	}

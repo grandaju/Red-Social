@@ -1,9 +1,14 @@
 package com.uniovi.entities;
 
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -34,6 +39,9 @@ public class User {
 	@OneToMany(mappedBy="userB", cascade = CascadeType.ALL)
 	private Set<Friend> amigosB;
 
+	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+	private Set<Publication> publications;
+	
 	//Eliminar la entidad Friend y añadir el @ManyToMany, para generar una tabla automaticamente.
 	
 	public User(String email, String name, String lastName) {
@@ -106,6 +114,46 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Set<Publication> getPublications() {
+		return publications;
+	}
+
+	public void setPublications(Set<Publication> publications) {
+		this.publications = publications;
+	}
+
+	public Set<Invitation> getInvitaciones() {
+		return invitaciones;
+	}
+
+	public void setInvitaciones(Set<Invitation> invitaciones) {
+		this.invitaciones = invitaciones;
+	}
+
+	public Set<Invitation> getInvitacionesEnviadas() {
+		return invitacionesEnviadas;
+	}
+
+	public void setInvitacionesEnviadas(Set<Invitation> invitacionesEnviadas) {
+		this.invitacionesEnviadas = invitacionesEnviadas;
+	}
+
+	public Set<Friend> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(Set<Friend> amigos) {
+		this.amigos = amigos;
+	}
+
+	public Set<Friend> getAmigosB() {
+		return amigosB;
+	}
+
+	public void setAmigosB(Set<Friend> amigosB) {
+		this.amigosB = amigosB;
 	}
 
 }
