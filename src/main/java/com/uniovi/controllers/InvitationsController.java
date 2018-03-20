@@ -30,7 +30,7 @@ public class InvitationsController {
 	
 	@Autowired
 	private InvitationService invitationService;
-	/**Pendiente: Capar el boton de agregar usuario una vez se ha enviado la invitacion
+	/**
 	 * Respuesta para agregar a un amigo obtenemos nuestra propia info a traves del contexto
 	 * @param model
 	 * @param id de quien queremos agregar

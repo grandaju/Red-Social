@@ -68,7 +68,7 @@ public class PublicationsController {
 
 		return "/publication/list";
 	}
-	// + '${propietario.email}'
+
 	
 	@RequestMapping(value= {"/publication/list/{id}"},  method = RequestMethod.GET)
 	public String listFirendPublicartions(Model model,Pageable pageable, @PathVariable long id) {

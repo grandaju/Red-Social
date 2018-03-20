@@ -10,7 +10,12 @@ import com.uniovi.entities.Friend;
 import com.uniovi.entities.User;
 @Repository
 public interface FriendRepository extends CrudRepository<Friend, Long> {
-	
+	/**
+	 * Busqueda de un usuario del cual se es amigo
+	 * @param pageable
+	 * @param id
+	 * @return
+	 */
 	@Query("Select f.userB from Friend f where f.userA.id = ?1")
 	Page<User> searchByAmistad(Pageable pageable, long id);
 

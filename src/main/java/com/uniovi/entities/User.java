@@ -24,7 +24,7 @@ public class User {
 
 
 	private String password;
-	@Transient // propiedad que no se almacena e la tabla.
+	@Transient 
 	private String passwordConfirm;
 	@OneToMany(mappedBy = "invitado", cascade = CascadeType.ALL)
 	private Set<Invitation> invitaciones;
@@ -42,7 +42,7 @@ public class User {
 	@OneToMany(mappedBy="user", cascade = CascadeType.ALL)
 	private Set<Publication> publications;
 	
-	//Eliminar la entidad Friend y añadir el @ManyToMany, para generar una tabla automaticamente.
+	
 	
 	public User(String email, String name, String lastName) {
 		super();

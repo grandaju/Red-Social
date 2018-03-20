@@ -54,12 +54,7 @@ public class UsersController {
 		return "signup";
 	}
 
-	// @RequestMapping(value = "/signup", method = RequestMethod.POST)
-	// public String signup(@ModelAttribute("user") User user, Model model) {
-	// usersService.addUser(user);
-	// securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
-	// return "redirect:home";
-	// }
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String setUser(@Validated User user, BindingResult result, Model model) {
 		signUpFormValidator.validate(user, result);
@@ -160,20 +155,6 @@ public class UsersController {
 	}
 	
 	
-//	/**
-//	 * Respuesta para agregar a un amigo obtenemos nuestra propia info a traves del contexto
-//	 * @param model
-//	 * @param id de quien queremos agregar
-//	 * @return
-//	 */
-//	@RequestMapping(value = "/user/agregate/{id}")
-//	public String agregate(Model model, @PathVariable Long id) {
-//		User invitado = usersService.getUser(id);
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String email = auth.getName();
-//		User invitador = usersService.getUserByEmail(email);
-//		usersService.agregate(invitado, invitador);
-//		return "redirect:/user/list/";
-//	}
+
 
 }

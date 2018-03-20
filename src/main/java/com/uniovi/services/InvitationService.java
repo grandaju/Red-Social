@@ -34,7 +34,12 @@ public class InvitationService {
 		Page<Invitation> invis = invitationRepository.searchByInvitado(pageable, id);
 		return invis;
 	}
-	
+	/**
+	 * Busqueda de una invitacion mediante los id de los usuarios relacionados
+	 * @param id
+	 * @param userId
+	 * @return
+	 */
 	public Invitation getInvitation(long id, long userId) {
 		return invitationRepository.serarchByIds(id, userId);
 	}

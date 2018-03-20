@@ -35,7 +35,12 @@ public class FriendService {
 		return invis;
 	}
 
-
+	/**
+	 * Metodo que confirma la existencia de una amistad
+	 * @param id
+	 * @param id2
+	 * @return
+	 */
 	public boolean checkFriendShip(long id, long id2) {
 		Friend amistad = friendRepository.searchByUsers(id, id2);
 		if(amistad != null) {
