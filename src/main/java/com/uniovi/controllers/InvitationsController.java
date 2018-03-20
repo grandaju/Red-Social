@@ -62,14 +62,31 @@ public class InvitationsController {
 		invis = invitationService.getInvitations(pageable, user.getId());
 		
 	
-		if(invis.getContent().isEmpty()) {
-			System.err.println("Ta vacioooooooooooooooooooooooooooooooooooooooooo");
-		}
+	
 		model.addAttribute("page", invis);
 		model.addAttribute("invitationsList", invis.getContent());
 
 		log.info("Listando invitaciones de:"+user.getFullName());
 		return "/invitation/list";
+	}
+	
+	@RequestMapping(value = "/invitation/list/update")
+	public String getInvitationsFrag(Model model, Pageable pageable) {
+		Page<Invitation> invis = new PageImpl<Invitation>(new LinkedList<Invitation>());
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = usersService.getUserByEmail(email);
+
+		invis = invitationService.getInvitations(pageable, user.getId());
+		
+	
+
+		model.addAttribute("page", invis);
+		model.addAttribute("invitationsList", invis.getContent());
+
+		log.info("Listando invitaciones de:"+user.getFullName());
+		return "/invitation/list :: tableInvis";
 	}
 }
 

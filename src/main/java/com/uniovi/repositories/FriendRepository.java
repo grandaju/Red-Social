@@ -15,4 +15,13 @@ public interface FriendRepository extends CrudRepository<Friend, Long> {
 	Page<User> searchByAmistad(Pageable pageable, long id);
 
 	Page<User> findAll(Pageable pageable);
+	
+	/**
+	 * Metodo que permite confirmar que existe la amistad entre dos usuarios
+	 * @param pageable
+	 * @param id
+	 * @return
+	 */
+	@Query("Select f from Friend f where f.userA.id = ?1 and f.userB.id = ?2")
+	Friend searchByUsers(long id1, long id2);
 }

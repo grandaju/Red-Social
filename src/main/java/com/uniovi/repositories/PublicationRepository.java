@@ -11,5 +11,9 @@ import com.uniovi.entities.Publication;
 public interface PublicationRepository  extends CrudRepository<Publication, Long>{
 	@Query("SELECT p FROM Publication p WHERE p.user.id = ?1 ORDER BY p.date DESC")
 	Page<Publication> searchMyPublications(Pageable pageable, long id);
+	
+	
+	@Query("SELECT p FROM Publication p WHERE p.user.id = ?1 ORDER BY p.date DESC")
+	Page<Publication> searchFriendPublications(Pageable pageable, long id);
 
 }

@@ -10,7 +10,7 @@
 
 		<p th:text="#{viewinvis.message}"></p>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover"  th:fragment="tableInvis" id="tableInvis">
 				<thead>
 					<tr>
 						<th>Invitado</th>
@@ -32,8 +32,14 @@
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
 								  $( "#friendButton[[${invitation.invitador.id}]]" ).click(function() {
-									  $.get( "/friend/agergate/[[${invitation.invitador.id}]]");
-									
+									  $.get( "/friend/agergate/[[${invitation.invitador.id}]]" , function() {
+									 
+									  
+									  var urlUpdate = '/invitation/list/update';
+								
+
+									  $("#tableInvis").load(urlUpdate);
+									  });
 								  });
 								  /*]]>*/
 								</script>

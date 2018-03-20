@@ -34,4 +34,13 @@ public class FriendService {
 		Page<User> invis = friendRepository.searchByAmistad(pageable, id);
 		return invis;
 	}
+
+
+	public boolean checkFriendShip(long id, long id2) {
+		Friend amistad = friendRepository.searchByUsers(id, id2);
+		if(amistad != null) {
+			return true;
+		}
+		return false;
+	}
 }

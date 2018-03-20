@@ -11,13 +11,7 @@
 				sec:authentication="principal.username" th:inline="text"></span>
 		</p>
 
-		<button type="button" th:id="${'usersButton'}" class="btn btn-info" sec:authorize="isAuthenticated()">Usuarios</button>
-		<script>
-			$("#usersButton").click(function() {
-				$.load("/user/list");
-			});
-		</script>
-	</div>
+		</div>
 	<footer th:replace="fragments/footer" />
 </body>
 </html>

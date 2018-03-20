@@ -13,12 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.RedSocialApplication;
 import com.uniovi.entities.Publication;
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendService;
 import com.uniovi.services.PublicationsService;
 import com.uniovi.services.UsersService;
 
@@ -28,6 +30,9 @@ public class PublicationsController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private FriendService friendService;
 	
 	@Autowired
 	private PublicationsService publicationsService;
@@ -62,6 +67,32 @@ public class PublicationsController {
 		log.info("Viendo las publicaciones de:" + user.getFullName());
 
 		return "/publication/list";
+	}
+	// + '${propietario.email}'
+	
+	@RequestMapping(value= {"/publication/list/{id}"},  method = RequestMethod.GET)
+	public String listFirendPublicartions(Model model,Pageable pageable, @PathVariable long id) {
+		Page<Publication> publications = new PageImpl<Publication>(new LinkedList<Publication>());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = usersService.getUserByEmail(email);
+		
+		if(friendService.checkFriendShip(id,user.getId() )) {
+			publications = publicationsService.getPublications(pageable, id);
+				
+			model.addAttribute("propietario", usersService.getUser(id));
+			model.addAttribute("publicationsList", publications.getContent());
+			
+			log.info("Viendo las publicaciones de:" + usersService.getUser(id).getFullName());
+	
+			return "/publication/list";
+		}
+		
+		log.error("No pueden visualizarse las publicaciones de "+ usersService.getUser(id).getFullName()+ ""
+				+ " ya que no hay relacion de amistad creada" );
+
+		
+		return "redirect:/";
 	}
 	
 }

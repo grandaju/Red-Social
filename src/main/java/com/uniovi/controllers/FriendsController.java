@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,7 @@ public class FriendsController {
 	 * @param id del invitador
 	 * @return
 	 */
+	@Transactional
 	@RequestMapping(value = "/friend/agergate/{id}")
 	public String agregate(Model model, @PathVariable long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -52,13 +54,14 @@ public class FriendsController {
 		Invitation invit = invitationService.getInvitation(id, user.getId());
 		User userA = invit.getInvitado();
 		User userB = invit.getInvitador();
-		//Creamos una amistad
+		
+		invitationService.remove(invit.getId());
+		
 		friendService.agregate(userA, userB);
 		friendService.agregate(userB, userA);
-		//Eliminamos la invitacion
-		invitationService.remove(id);
+
 		log.info("Se ha añadido la amistad" + userA.getFullName() +" y "+ userB.getFullName());
-		return "redirect:/user/list/";
+		return "redirect:/invitation/list";
 	}
 	/**
 	 * Metodo que realiza la llamada para obtener la lista de amigos de un usuario

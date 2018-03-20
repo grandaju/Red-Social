@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 				<tr th:each="user : ${friendList}">
-						<td th:text="${user.email}">aaa@bbb.com</td>
+						<td  > <a  th:text="${user.email}" th:href="${'/publication/list/' + user.id}">aaa@bbb.com</a></td>
 						<td th:text="${user.name}">Nombre</td>
 
 					</tr>
