@@ -27,13 +27,13 @@ public class IsertSampleDataService {
 		user3.setRole(rolesService.getRoles()[0]);
 		User user4 = new User("marta@gmail.com", "Marta", "Almonte");
 		user4.setPassword("123456");
-		user4.setRole(rolesService.getRoles()[1]);
+		user4.setRole(rolesService.getRoles()[0]);
 		User user5 = new User("pelayo@gmail.com", "Pelayo", "Valdes");
 		user5.setPassword("123456");
-		user5.setRole(rolesService.getRoles()[1]);
+		user5.setRole(rolesService.getRoles()[0]);
 		User user6 = new User("edward@gmail.com", "Edward", "Núñez");
 		user6.setPassword("123456");
-		user6.setRole(rolesService.getRoles()[2]);
+		user6.setRole(rolesService.getRoles()[1]);
 		
 		usersService.addUser(user1);
 		usersService.addUser(user2);

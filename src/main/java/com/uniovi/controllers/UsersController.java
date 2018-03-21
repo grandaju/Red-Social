@@ -14,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +23,6 @@ import com.uniovi.entities.User;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
-import com.uniovi.validators.AddUserValidator;
 import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
@@ -45,8 +42,7 @@ public class UsersController {
 	@Autowired
 	private RolesService rolesService;
 
-	@Autowired
-	private AddUserValidator addUserValidator;
+
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -85,7 +81,8 @@ public class UsersController {
 	}
 
 	@RequestMapping(value= {"/user/list"},  method = RequestMethod.GET)
-	public String getListado(Model model,Pageable pageable, @RequestParam(value = "", required = false) String searchText) {
+	public String getListado(Model model,Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText) {
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
@@ -106,53 +103,7 @@ public class UsersController {
 		return "user/list";
 	}
 
-	@RequestMapping(value = "/user/add")
-	public String getUser(Model model) {
-		model.addAttribute("rolesList", rolesService.getRoles());
 
-		model.addAttribute("user", new User());
-		
-		return "user/add";
-	}
-
-	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
-	public String addUser(@Validated User user, BindingResult result, Model model) {
-
-		addUserValidator.validate(user, result);
-		if (result.hasErrors()) {
-			return "/user/add";
-		}
-		usersService.addUser(user);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping("/user/details/{id}")
-	public String getDetail(Model model, @PathVariable Long id) {
-		model.addAttribute("user", usersService.getUser(id));
-		return "user/details";
-	}
-
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
-		usersService.deleteUser(id);
-		return "redirect:/user/list";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
-		User user = usersService.getUser(id);
-		model.addAttribute("user", user);
-		return "user/edit";
-	}
-
-	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		User original = usersService.getUser(id);
-		original.setName(user.getName());
-		original.setLastName(user.getLastName());
-		usersService.addUser(original);
-		return "redirect:/user/details/" + id;
-	}
 	
 	
 

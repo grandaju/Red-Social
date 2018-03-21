@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.uniovi.RedSocialApplication;
 import com.uniovi.entities.Invitation;
 import com.uniovi.entities.User;
 import com.uniovi.services.FriendService;
@@ -71,18 +70,18 @@ public class FriendsController {
 	 */
 	@RequestMapping(value = "/friends/list")
 	public String getFriends(Model model, Pageable pageable) {
-		Page<User> invis = new PageImpl<User>(new LinkedList<User>());
+		Page<User> amigos = new PageImpl<User>(new LinkedList<User>());
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User user = usersService.getUserByEmail(email);
 
-		invis = friendService.getFriends(pageable, user.getId());
+		amigos = friendService.getFriends(pageable, user.getId());
 		
 	
 	
-		model.addAttribute("page", invis);
-		model.addAttribute("friendList", invis.getContent());
+		model.addAttribute("page", amigos);
+		model.addAttribute("friendList", amigos.getContent());
 		
 		log.info("Listando los amigos de:"+ user.getFullName());
 

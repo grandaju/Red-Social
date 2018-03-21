@@ -39,6 +39,9 @@ public class InvitationsController {
 	@RequestMapping(value = "/invitation/agergate/{id}")
 	public String agregate(Model model, @PathVariable Long id) {
 		User invitado = usersService.getUser(id);
+		if(invitado == null) {
+			return "redirect:/user/list";
+		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User invitador = usersService.getUserByEmail(email);

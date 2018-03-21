@@ -16,15 +16,8 @@ public interface PublicationRepository  extends CrudRepository<Publication, Long
 	 * @return
 	 */
 	@Query("SELECT p FROM Publication p WHERE p.user.id = ?1 ORDER BY p.date DESC")
-	Page<Publication> searchMyPublications(Pageable pageable, long id);
+	Page<Publication> searchPublications(Pageable pageable, long id);
 	
-	/**
-	 * Busqueda de las publicaciones de un usuario amigo
-	 * @param pageable
-	 * @param id
-	 * @return
-	 */
-	@Query("SELECT p FROM Publication p WHERE p.user.id = ?1 ORDER BY p.date DESC")
-	Page<Publication> searchFriendPublications(Pageable pageable, long id);
+
 
 }

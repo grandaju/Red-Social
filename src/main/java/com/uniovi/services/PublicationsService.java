@@ -29,7 +29,7 @@ public class PublicationsService {
 	 * @return
 	 */
 	public Page<Publication> getPublications(Pageable pageable, long id) {
-		Page<Publication> pubs = publicationRepo.searchMyPublications(pageable, id);
+		Page<Publication> pubs = publicationRepo.searchPublications(pageable, id);
 		return pubs;
 	}
 
