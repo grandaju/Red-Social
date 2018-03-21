@@ -34,7 +34,7 @@
 						<td th:text="${user.name}">Nombre</td>
 
 						<td th:id="${'tdb' + user.id}">
-								<button type="button" th:id="${'invitationButton' + user.id}"
+								<button type="button" th:text="#{btn.adduser}" th:id="${'invitationButton' + user.id}"
 									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/

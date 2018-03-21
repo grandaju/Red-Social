@@ -17,29 +17,29 @@
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/list">Ver Usuarios</a></li>
+						<li><a href="/user/list" th:text="#{navm.users}">Ver Usuarios</a></li>
 					</ul></li>
 					<li id="friends-menu" class="dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 						th:text="#{nav.friends}"></span><span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/friends/list">Ver Amigos</a></li>
+						<li><a href="/friends/list" th:text="#{navm.friends}">Ver Amigos</a></li>
 					</ul></li>
 				<li id="invitations-menu" class="dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 						th:text="#{nav.invitations}"></span><span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/invitation/list">Ver Invitaciones</a></li>
+						<li><a href="/invitation/list" th:text="#{navm.invitations}">Ver Invitaciones</a></li>
 					</ul></li>
 				<li id="publications-menu" class="dropdown"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 						th:text="#{nav.publications}"></span><span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/publication/create">Crear Publicacion</a></li>
-						<li><a href="/publication/list">Ver Publicaciones</a></li>
+						<li><a href="/publication/create" th:text="#{navm.pubsc}">Crear Publicacion</a></li>
+						<li><a href="/publication/list" th:text="#{navm.pubs}">Ver Publicaciones</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

@@ -27,7 +27,7 @@
 						<td th:text="${invitation.invitador.email}">bbb@aaa.com</td>
 						<td>
 
-								<button type="button" th:id="${'friendButton' + invitation.invitador.id}"
+								<button type="button" th:text="#{btn.adduser}" th:id="${'friendButton' + invitation.invitador.id}"
 									class="btn btn-info">Agregar Amigo</button>
 								<script th:inline="javascript">
 								  /*<![CDATA[*/
